@@ -1,18 +1,23 @@
 const net = require('net');
+const {ip, port} = require('./constants');
 
 const connect = function() {
   const conn = net.createConnection({
-    host: 'localhost',
-    port:50541
+    ip,
+    port
   });
 
   conn.setEncoding('utf8');
 
   conn.on('connect', () => { //inside the on('xxx'), xxx is the handler
-  console.log('Successfully connected!');
-  conn.write('Name: joe');
+    // console.log('Successfully connected!');
+    conn.write('Name: ben');
+  });
 
-});
+  conn.on('handleUserInput', () => {
+    conn.write('hello!')
+  })
+
 
   // setInterval(() => {
   //   conn.write("Move: up");},500)
@@ -24,4 +29,6 @@ const connect = function() {
   return conn;
 }
 
-module.exports = { connect };
+module.exports = connect;
+
+//this one produce an object with all the connection information; will be required by the main script play.js
